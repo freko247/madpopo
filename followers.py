@@ -5,6 +5,7 @@ import twitter
 from operator import itemgetter
 
 import config
+from log import logger
 
 CONSUMER_KEY = config.CONSUMER_KEY
 CONSUMER_SECRET = config.CONSUMER_SECRET
@@ -53,14 +54,14 @@ def getTopFollowers(foundFollowers=None, user_count=100, source=None):
 
 def followUsers(users):
     for user in users:
+        logger.info("Following: %s" % user[1])
         twitter_api.friendships.create(screen_name=user[1])
 
 
 def main():
-    # followers = getFollowers()
-    # topFollowers = getTopFollowers(followers, source="followers3")
-    # followUsers(topFollowers)
-    print getTopFollowers(source="followers3")
+    followers = getFollowers()
+    topFollowers = getTopFollowers(followers, source="followers3")
+    followUsers(topFollowers)
 
 if __name__ == '__main__':
     main()
