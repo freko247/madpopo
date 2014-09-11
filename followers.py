@@ -26,7 +26,7 @@ def getFollowers(destinationFile=None):
             cursor = found_followers[-1].get('next_cursor_str')
         found_followers.append(
             twitter_api.followers.list(screen_name='GordonRamsay',
-                                                 count=2000,
+                                                 count=200,
                                                  cursor=cursor)
                                                  )
     if destinationFile:
@@ -49,7 +49,7 @@ def getTopFollowers(foundFollowers=None, user_count=100, source=None):
         for user in result.get('users'):
             followers.append((user.get('followers_count'), user.get('name')))
     followers = sorted(followers, key=itemgetter(0), reverse=True)
-    return followers[:100]
+    return followers[:user_count]
 
 
 def followUsers(users):
@@ -60,7 +60,7 @@ def followUsers(users):
 
 def main():
     followers = getFollowers()
-    topFollowers = getTopFollowers(followers, source="followers3")
+    topFollowers = getTopFollowers(followers)
     followUsers(topFollowers)
 
 if __name__ == '__main__':
