@@ -1,19 +1,13 @@
 # -*- coding:utf-8 -*-
 import json
-import twitter
-
 from operator import itemgetter
 
-import config
 from log import logger
-
-auth = twitter.oauth.OAuth(config.OAUTH_TOKEN, config.OAUTH_TOKEN_SECRET,
-                           config.CONSUMER_KEY, config.CONSUMER_SECRET)
-
-twitter_api = twitter.Twitter(auth=auth)
+from twitterConnection import twitter_api
 
 
 def getFollowers(screen_name, destinationFile=None):
+    '''Function gets a list of users following a given user.'''
     found_followers = []
     logger.debug("Looking for followers of: %s" % screen_name)
     for i in range(15):
@@ -36,6 +30,9 @@ def getFollowers(screen_name, destinationFile=None):
 
 
 def getTopFollowers(foundFollowers=None, user_count=100, source=None):
+    '''Returns a sorted list, based on number of user followers. List default
+    size is 100, but can be changed with argument. Source for user data can be
+    file or list of user objects.'''
     if source:
         logger.debug("Retrieving follower data from file, %s" % source)
         f = open(source, 'r')
@@ -55,6 +52,7 @@ def getTopFollowers(foundFollowers=None, user_count=100, source=None):
 
 
 def followUsers(users):
+    '''Given list of users (screen_name) will be followed.'''
     for user in users:
         logger.info("Following: %s" % user[1])
         twitter_api.friendships.create(screen_name=user[1], follow=False)
