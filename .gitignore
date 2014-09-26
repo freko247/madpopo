@@ -1,3 +1,5 @@
+/AFINN
 config.py
 madpopo.log
 *.pyc
+*.txt
