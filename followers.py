@@ -19,8 +19,8 @@ def getFollowers(screen_name, destinationFile=None):
         found_followers.append(
             twitter_api.followers.list(screen_name=screen_name,
                                                  count=200,
-                                                  cursor=cursor)
-                                                  )
+                                                 cursor=cursor)
+                                                 )
     if destinationFile:
         logger.debug("Writing to file, %s" % destinationFile)
         f = open(destinationFile, 'w')
