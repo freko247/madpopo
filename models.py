@@ -20,6 +20,6 @@ class Tweet(Base):
     lon = Column(Float())
     lat = Column(Float())
     retweet_count = Column(Integer())
-    tweet_id = Column(Integer())
+    tweet_id = Column(String(20))
     created_at = Column(DateTime)
-    user_id = Column(Integer())
+    user_id = Column(String(20))
