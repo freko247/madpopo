@@ -29,3 +29,11 @@ def storeTimeline():
     except:
         logger.info("Unexpected error: %s" % sys.exc_info()[0])
         raise
+
+
+def main():
+    storeTimeline()
+
+
+if __name__ == '__main__':
+    main()
