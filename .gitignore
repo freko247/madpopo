@@ -3,3 +3,4 @@ config.py
 madpopo.log
 *.pyc
 *.txt
+*.pem
