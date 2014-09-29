@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from dateutil import parser
 import sys
+import os
 
 import db
 from log import logger
@@ -10,7 +11,7 @@ from twitterConnection import TwitterStream
 
 def storeTimeline():
     try:
-        logger.info('Starting to store timeline data')
+        logger.info('Starting to store timeline data (pid %s)' % os.getpid())
         twitter_stream = TwitterStream(domain='userstream.twitter.com')
         db.init_db()
         for msg in twitter_stream.stream.user(following=True):
