@@ -19,8 +19,8 @@ def storeTimeline():
                 tweet.text = msg['text'].encode('utf-8')
                 tweet.created_at = parser.parse(msg['created_at']).replace(tzinfo=None)
                 if msg.get('coordinates'):
-                    tweet.lat = msg['coordinates']['coordinates'][0]
-                    tweet.lon = msg['coordinates']['coordinates'][1]
+                    tweet.lon = msg['coordinates']['coordinates'][0]
+                    tweet.lat = msg['coordinates']['coordinates'][1]
                 tweet.tweet_id = msg['id']
                 tweet.retweet_count = msg['retweet_count']
                 tweet.user_id = msg['user']['id']
