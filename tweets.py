@@ -27,6 +27,7 @@ def storeTimeline():
                 tweet.user_id = msg['user']['id']
                 db.session.add(tweet)
                 db.session.commit()
+            logger.error('Stream timeout or other cause for shutdown')
     except:
         logger.error("Unexpected error: %s" % sys.exc_info()[0])
         raise
