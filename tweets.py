@@ -14,7 +14,7 @@ def storeTimeline():
         twitter_stream = TwitterStream(domain='userstream.twitter.com')
         db.init_db()
         for msg in twitter_stream.stream.user(following=True):
-            if not msg.get('friends'):
+            if msg.get('text'):
                 tweet = Tweet()
                 tweet.text = msg['text'].encode('utf-8')
                 tweet.created_at = parser.parse(msg['created_at']).replace(tzinfo=None)
@@ -27,7 +27,7 @@ def storeTimeline():
                 db.session.add(tweet)
                 db.session.commit()
     except:
-        logger.info("Unexpected error: %s" % sys.exc_info()[0])
+        logger.error("Unexpected error: %s" % sys.exc_info()[0])
         raise
 
 
