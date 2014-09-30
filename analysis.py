@@ -34,3 +34,4 @@ def sentiment(text):
         sentiment = float(sum(sentiments))/math.sqrt(len(sentiments))
     else:
         sentiment = 0
+    return sentiment
