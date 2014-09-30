@@ -11,13 +11,16 @@ import tweets
 
 def main():
     try:
+        # Get tweets
         searches = tweets.getTweets(config.TWEET_LIKES)
+        # Analyze tweets
         analyzed = []
         for msgs in searches:
             for status in msgs.get('statuses'):
                 analyzed.append((analysis.sentiment(status.get('text')),
                                  status.get('id')))
         analyzed = sorted(analyzed, key=itemgetter(0), reverse=True)
+        # Retweet the five most positive tweets
         for i, tweet in enumerate([tweet for tweet in analyzed if tweet[0] > 1][:5]):
             print tweet
             tweets.reTweet(tweet[1])
