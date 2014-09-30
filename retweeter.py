@@ -21,7 +21,7 @@ def main():
                                  status.get('id')))
         analyzed = sorted(analyzed, key=itemgetter(0), reverse=True)
         # Retweet the five most positive tweets
-        for i, tweet in enumerate([tweet for tweet in analyzed if tweet[0] > 1][:5]):
+        for i, tweet in enumerate([tweet for tweet in analyzed if tweet[0] > 1][0]):
             print tweet
             tweets.reTweet(tweet[1])
             sleep_minutes = randrange(1, 3)
