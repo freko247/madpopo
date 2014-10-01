@@ -20,13 +20,10 @@ def main():
                 analyzed.append((analysis.sentiment(status.get('text')),
                                  status.get('id')))
         analyzed = sorted(analyzed, key=itemgetter(0), reverse=True)
-        # Retweet the five most positive tweets
-        for i, tweet in enumerate([tweet for tweet in analyzed if tweet[0] > 1][0]):
-            print tweet
-            tweets.reTweet(tweet[1])
-            sleep_minutes = randrange(1, 3)
-            time.sleep(60*sleep_minutes)
-            logger.info('%s, retweeting tweet_id: %s, with sentiment %s ' % (i+1, tweet[1], tweet[0]))
+        # Retweet the most positive tweet
+        tweet = analyzed[0][1]
+        tweets.reTweet(tweet)
+        logger.info('%s, retweeting tweet_id: %s, with sentiment %s ' % (i+1, tweet[1], tweet[0]))
     except Exception, err:
         logger.error('%s: %s' % (Exception, err))
 
