@@ -11,6 +11,7 @@ import tweets
 
 def main():
     try:
+        logger.info('Starting retweet script')
         # Get tweets
         searches = tweets.getTweets(config.TWEET_LIKES)
         # Analyze tweets
