@@ -1,7 +1,9 @@
 /AFINN
+/.ipynb_checkpoints
 config.py
 madpopo.log
 *.pyc
 *.txt
 *.pem
 *.out
+*.ipynb
