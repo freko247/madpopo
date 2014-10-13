@@ -46,7 +46,7 @@ class User(Base):
     join_date = Column(DateTime)        # User join date
     language = Column(Integer())        # lang
     tweets = Column(Integer())          # statuses_count
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(String(20), primary_key=True)
 
 
 class Language(Base):
