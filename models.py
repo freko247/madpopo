@@ -25,7 +25,7 @@ class Tweet(Base):
     user_id = Column(String(20))
 
 
-class Users(Base):
+class User(Base):
     ''' Stores user information
     activity = Tweet frequency
     followed = Date when user was followed
@@ -37,6 +37,7 @@ class Users(Base):
     tweets = Tweet count
     user_id = User id
     '''
+    __tablename__ = 'user'
     activity = Column(Float())          # tweet_frequency
     followed = Column(DateTime)         # Date when user was followed
     followed_back = Column(DateTime)    # Date when user followed back
@@ -50,5 +51,6 @@ class Users(Base):
 
 class Language(Base):
     '''Language lookup table'''
+    __tablename__ = "language"
     id = Column(Integer(), primary_key=True)
     language = Column(String(5))
