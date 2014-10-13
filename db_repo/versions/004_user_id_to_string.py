@@ -7,11 +7,11 @@ meta = MetaData()
 
 def upgrade(migrate_engine):
     meta.bind = migrate_engine
-    tweet = Table('tweet', meta, autoload=True)
-    tweet.c.user_id.alter(type=String(20))
+    user = Table('user', meta, autoload=True)
+    user.c.user_id.alter(type=String(20))
 
 
 def downgrade(migrate_engine):
     meta.bind = migrate_engine
-    tweet = Table('tweet', meta, autoload=True)
-    tweet.c.user_id.alter(type=Integer())
+    user = Table('user', meta, autoload=True)
+    user.c.user_id.alter(type=Integer())
