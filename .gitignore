@@ -7,3 +7,5 @@ madpopo.log
 *.pem
 *.out
 *.ipynb
+*.sublime-project
+*.sublime-workspace
