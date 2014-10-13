@@ -14,4 +14,4 @@ def upgrade(migrate_engine):
 def downgrade(migrate_engine):
     meta.bind = migrate_engine
     tweet = Table('tweet', meta, autoload=True)
-    tweet.c.lat.alter(type=Integer())
+    tweet.c.user_id.alter(type=Integer())
