@@ -40,6 +40,7 @@ class User(Base):
     __tablename__ = 'user'
     activity = Column(Float())          # tweet_frequency
     followed = Column(DateTime)         # Date when user was followed
+    unfollowed = Column(DateTime)         # Date when user was followed
     followed_back = Column(DateTime)    # Date when user followed back
     followers = Column(Integer())       # number of followers_count
     friends = Column(Integer())         # number of friends_count

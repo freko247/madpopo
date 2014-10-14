@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import json
 from operator import itemgetter
-from import datetime
+from datetime import datetime
 
 from log import logger
 from twitterConnection import twitter_api
@@ -65,6 +65,18 @@ def followUsers(users):
         new_user.followed = datetime.now()
         new_user.user_id = user
         db.session.merge(new_user)
+        db.session.commit()
+
+
+def unfollowUsers(users):
+    '''Given list of users (user_id) will be unfollowed.'''
+    db.init_db()
+    for user in users:
+        logger.info("Unfollowing: %s" % user)
+        twitter_api.friendships.destroy(user_id=user)
+        unfriend = db.session.query(User).filter_by(user_id=user).first()
+        unfriend.unfollowed = datetime.now()
+        db.session.merge(unfriend)
         db.session.commit()
 
 
