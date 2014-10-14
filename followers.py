@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import json
 from operator import itemgetter
+from import datetime
 
 from log import logger
 from twitterConnection import twitter_api
@@ -58,16 +59,19 @@ def followUsers(users):
     '''Given list of users (user_id) will be followed.'''
     db.init_db()
     for user in users:
-        logger.info("Following: %s" % user[1])
+        logger.info("Following: %s" % user)
+        twitter_api.friendships.create(user_id=user, follow=False)
         new_user = User()
-        new_user
-        twitter_api.friendships.create(user_id=user[1], follow=False)
+        new_user.followed = datetime.now()
+        new_user.user_id = user
+        db.session.merge(new_user)
+        db.session.commit()
 
 
 def main():
     followers = getFollowers('GordonRamsay')
     topFollowers = getTopFollowers(followers)
-    followUsers(topFollowers)
+    followUsers([user[1] for user in topFollowers])
 
 if __name__ == '__main__':
     main()
