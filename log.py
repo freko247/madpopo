@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
+import sys
 
 # Create logger
 logger = logging.getLogger('madpopo')
 logger.setLevel(logging.DEBUG)
 
 # Create log handlers and set log level
-hdlr = logging.FileHandler(os.getcwd() + '/madpopo.log')
+pathname = os.path.dirname(sys.argv[0])
+path = os.path.abspath(pathname)
+hdlr = logging.FileHandler(path + '/madpopo.log')
 hdlr.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)

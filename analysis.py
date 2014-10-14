@@ -11,11 +11,18 @@ of the room piped up, "Yeah . . .right."
 '''
 
 import math
+import os
 import re
+import sys
+
+
+pathname = os.path.dirname(sys.argv[0])        
+path = os.path.abspath(pathname)
 filenameAFINN = 'AFINN/AFINN-111.txt'
+print path + filenameAFINN
 try:
     afinn = dict(map(lambda (w, s): (w, int(s)), [
-        ws.strip().split('\t') for ws in open(filenameAFINN)]))
+        ws.strip().split('\t') for ws in open(path+ '/' + filenameAFINN)]))
 except IOError:
     print "AFINN/AFINN-111.txt could not be found, it can be downloaded at:" \
           + "http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/6010/zip/" \
