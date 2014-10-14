@@ -1,0 +1,38 @@
+List of features to implement for Mads Poulsen
+
+
+#Tweets/Retweets
+- Tweeting with location (geo-tags)
+- Retweet 2 good machine learning tweets a day
+        1. Best probability of being good
+        2. Most retweets within last 24 hours
+        *  Make a rule where the above two are the same
+- Retweet people from San Francisco
+
+#Data
+- Collecting good tweets (tweets with more than 10 retweets)
+- Collecting bad tweets (tweets with less than 10 retweets)
+- Extract features from tweets
+        * Followers of the user who tweeted
+        * Age of the user account
+        * Nr. of links in the tweet
+        * Nr. of words in the tweet
+        * Nr. of hashtags in the tweet
+
+
+#Machine Learning
+- Classification on friends (good or bad?)
+- Classify tweets collected (FOLLOW from Data 'Extract features')
+        * Naive Bayes Classifier
+        * Maximum Entropy Classifier
+
+
+#Follow
+- Implement ''simple'' (reciprocal) follow routine
+- Implement follow routine on good friends
+- Follow 50% spam accounts, 50% human accounts until 1000 followers
+- Follow people (FOLLOW from Relocate 'Move to San Francisco')
+        * Gain followers in San Francisco
+
+#Relocate
+- Move to San Francisco

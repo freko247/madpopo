@@ -3,7 +3,6 @@
 config.py
 madpopo.log
 *.pyc
-*.txt
 *.pem
 *.out
 *.ipynb
