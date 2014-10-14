@@ -8,6 +8,7 @@ from log import logger
 
 
 def main():
+    db.init_db()
     users = db.session.query(User).all()
     favorite = None
     user_list = []
