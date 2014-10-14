@@ -10,7 +10,7 @@ from models import User
 '''This module provides basic functionality for management of followers.'''
 
 
-def getFollowers(user_id, destinationFile=None):
+def getFollowers(user_id, follows):
     '''Function gets a list of users following a given user.'''
     found_followers = []
     logger.debug("Looking for followers of: %s" % user_id)
@@ -21,38 +21,35 @@ def getFollowers(user_id, destinationFile=None):
             cursor = found_followers[-1].get('next_cursor_str')
         found_followers.append(
             twitter_api.followers.list(user_id=user_id,
-                                       count=200,
+                                       count=follows/14,
                                        cursor=cursor)
             )
-    if destinationFile:
-        logger.debug("Writing to file, %s" % destinationFile)
-        f = open(destinationFile, 'w')
-        f.write(json.dumps(found_followers))
-        f.close()
-    else:
-        return found_followers
+    followers_list = []
+    for segment in found_followers:
+        followers_list += segment.get('users')
+    return followers_list
 
 
-def getTopFollowers(foundFollowers=None, user_count=100, source=None):
-    '''Returns a sorted list, based on number of user followers. List default
-    size is 100, but can be changed with argument. Source for user data can be
-    file or list of user objects.'''
-    if source:
-        logger.debug("Retrieving follower data from file, %s" % source)
-        f = open(source, 'r')
-        results = json.loads(f.read())
-        logger.debug("Data loaded from file.")
-        f.close()
-    else:
-        results = foundFollowers
-    followers = []
-    logger.debug("Sorting list of %d users" % len(results))
-    for result in results:
-        for user in result.get('users'):
-            followers.append((user.get('followers_count'), user.get('str_id')))
-    followers = sorted(followers, key=itemgetter(0), reverse=True)
-    logger.debug("Returning %d users with most followers." % user_count)
-    return followers[:user_count]
+# def getTopFollowers(foundFollowers=None, user_count=100, source=None):
+#     '''Returns a sorted list, based on number of user followers. List default
+#     size is 100, but can be changed with argument. Source for user data can be
+#     file or list of user objects.'''
+#     if source:
+#         logger.debug("Retrieving follower data from file, %s" % source)
+#         f = open(source, 'r')
+#         results = json.loads(f.read())
+#         logger.debug("Data loaded from file.")
+#         f.close()
+#     else:
+#         results = foundFollowers
+#     followers = []
+#     logger.debug("Sorting list of %d users" % len(results))
+#     for result in results:
+#         for user in result.get('users'):
+#             followers.append((user.get('followers_count'), user.get('str_id')))
+#     followers = sorted(followers, key=itemgetter(0), reverse=True)
+#     logger.debug("Returning %d users with most followers." % user_count)
+#     return followers[:user_count]
 
 
 def followUsers(users):
@@ -81,9 +78,11 @@ def unfollowUsers(users):
 
 
 def main():
-    followers = getFollowers('GordonRamsay')
-    topFollowers = getTopFollowers(followers)
-    followUsers([user[1] for user in topFollowers])
+    # followers = getFollowers('GordonRamsay')
+    # topFollowers = getTopFollowers(followers)
+    # followUsers([user[1] for user in topFollowers])
+    pass
+
 
 if __name__ == '__main__':
     main()
