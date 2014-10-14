@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import db
 from models import User
 from followers import getFollowers, followUsers
+from log import logger
 
 
 def main():
@@ -14,6 +15,8 @@ def main():
         user_list.append(user.user_id)
         if user.favorited.date() == datetime.today().date():
             favorite = user.user_id
+            logger.info('Following todays favorites (%s) followers' % favorite)
+
     favorite_followers = getFollowers(favorite)
     favorite_followers = [follower for follower
                           in favorite_followers
