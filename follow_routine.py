@@ -8,6 +8,7 @@ from log import logger
 
 
 def main():
+    follows = 100
     db.init_db()
     users = db.session.query(User).all()
     favorite = None
@@ -20,14 +21,14 @@ def main():
                 favorite = user.user_id
     if favorite:
         logger.info(
-            'Following todays favorites (%s) followers' % favorite)
-        favorite_followers = getFollowers(favorite)
-        favorite_followers = [follower for follower
-                              in favorite_followers
-                              if follower not in user_list]
-        followUsers(favorite_followers[:100])
+            "Following todays favorite's (%s) followers" % favorite)
+        favorite_followers = getFollowers(favorite, follows)
+        favorite_followers_ids = [follower.get('id_str') for follower
+                                  in favorite_followers[:follows]
+                                  if follower not in user_list]
+        followUsers(favorite_followers_ids)
         new_favorite = User()
-        new_favorite.user_id = favorite_followers[0]
+        new_favorite.user_id = favorite_followers[0].get('id_str')
         new_favorite.favorited = datetime.now() + timedelta(days=6)
     else:
         logger.info('No favorite for today.')
