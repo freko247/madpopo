@@ -1,15 +1,16 @@
 # -*- coding:utf-8 -*-
+from datetime import datetime
+
+from dateutil import parser
+
 from log import logger
+from lookup_functions import get_language
 from models import User
+from time import sleep
 from twitterConnection import twitter_api
 import config
 import db
 import models
-from dateutil import parser
-from models import User
-from time import sleep
-from twitterConnection import twitter_api
-from lookup_functions import get_language
 
 
 def getFriends(screen_name=config.TWEET_SCREEN_NAME):
@@ -28,11 +29,15 @@ def getFriends(screen_name=config.TWEET_SCREEN_NAME):
     return [str(v) for v in id_list]
 
 
-def update_users(users):
+def update_users(users, friends=False):
     db.init_db()
     for user in users:
-        new_user = User()
-        new_user.user_id = user['id_str']
+        stored_user = db.session.query(
+            User).filter_by(user_id=user['id_str']).first()
+        new_user = stored_user or User(user_id=user['id_str'])
+        # Add followed_back date if user is friend and it is not set
+        if friends and not new_user.followed_back:
+            new_user.followed_back = datetime.now()
         join_date = parser.parse(user['created_at']).replace(tzinfo=None)
         new_user.join_date = join_date
         new_user.tweets = user['statuses_count']
@@ -58,7 +63,7 @@ def update_friends(friends,
         users = twitter_api.users.lookup(
             user_id=','.join(friends[stop-max_limit:stop]))
         logger.info('Updating users %d to %d' % (stop-max_limit, stop))
-        update_users(users)
+        update_users(users, friends=True)
         stop += max_limit
         requests += 1
         if requests >= max_requests:
@@ -76,5 +81,5 @@ def update_friends(friends,
                 user_id=','.join(friends[stop-max_limit:]))
             logger.info('Updating users %d to %d' % (
                 stop-max_limit, len(friends)))
-        update_users(users)
+        update_users(users, friends=True)
         requests += 1
