@@ -13,28 +13,31 @@ from models import User
 
 def getFollowers(user_id, follows):
     '''Function gets a list of users following a given user.'''
-    found_followers = []
-    logger.debug("Looking for followers of: %s" % user_id)
-    requests = follows/200 or 1
-    request_counter = 0
-    for i in range(requests):
-        cursor = -1
-        logger.debug("Getting followers %d/15" % (1+i))
-        if len(found_followers) > 0:
-            cursor = found_followers[-1].get('next_cursor_str')
-        found_followers.append(
-            twitter_api.followers.list(user_id=user_id,
-                                       count=200,
-                                       cursor=cursor)
-            )
-        request_counter += 1
-        if request_counter == 15:
-            sleep(60*15)
-            request_counter = 0
-    followers_list = []
-    for segment in found_followers:
-        followers_list += segment.get('users')
-    return followers_list
+    try:
+        found_followers = []
+        logger.debug("Looking for followers of: %s" % user_id)
+        requests = follows/200 or 1
+        request_counter = 0
+        for i in range(requests):
+            cursor = -1
+            logger.debug("Getting followers %d/15" % (1+i))
+            if len(found_followers) > 0:
+                cursor = found_followers[-1].get('next_cursor_str')
+            found_followers.append(
+                twitter_api.followers.list(user_id=user_id,
+                                           count=200,
+                                           cursor=cursor)
+                )
+            request_counter += 1
+            if request_counter == 15:
+                sleep(60*15)
+                request_counter = 0
+        followers_list = []
+        for segment in found_followers:
+            followers_list += segment.get('users')
+        return followers_list
+    except Exception, err:
+        logger.error('%s: %s' % (Exception, err))
 
 
 # def getTopFollowers(foundFollowers=None, user_count=100, source=None):
