@@ -2,6 +2,7 @@
 import json
 from operator import itemgetter
 from datetime import datetime
+from time import sleep
 
 from log import logger
 from twitterConnection import twitter_api
@@ -14,16 +15,22 @@ def getFollowers(user_id, follows):
     '''Function gets a list of users following a given user.'''
     found_followers = []
     logger.debug("Looking for followers of: %s" % user_id)
-    for i in range(15):
+    requests = follows/200
+    request_counter = 0
+    for i in range():
         cursor = -1
         logger.debug("Getting followers %d/15" % (1+i))
         if len(found_followers) > 0:
             cursor = found_followers[-1].get('next_cursor_str')
         found_followers.append(
             twitter_api.followers.list(user_id=user_id,
-                                       count=follows/14,
+                                       count=200,
                                        cursor=cursor)
             )
+        request_counter += 1
+        if request_counter == 15:
+            sleep(60*15)
+            request_counter = 0
     followers_list = []
     for segment in found_followers:
         followers_list += segment.get('users')
