@@ -15,7 +15,7 @@ def getFollowers(user_id, follows):
     '''Function gets a list of users following a given user.'''
     found_followers = []
     logger.debug("Looking for followers of: %s" % user_id)
-    requests = follows/200
+    requests = follows/200 or 1
     request_counter = 0
     for i in range(requests):
         cursor = -1
