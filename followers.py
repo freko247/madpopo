@@ -17,7 +17,7 @@ def getFollowers(user_id, follows):
     logger.debug("Looking for followers of: %s" % user_id)
     requests = follows/200
     request_counter = 0
-    for i in range():
+    for i in range(requests):
         cursor = -1
         logger.debug("Getting followers %d/15" % (1+i))
         if len(found_followers) > 0:
