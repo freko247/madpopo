@@ -15,14 +15,14 @@ def main():
         users = db.session.query(User).all()
         favorite = None
         user_list = []
-        logger.info('Starting follow routine.')
+        logger.debug('Starting follow routine.')
         for user in users:
             user_list.append(user.user_id)
             if user.favorited:
                 if user.favorited.date() == datetime.today().date():
                     favorite = user.user_id
         if favorite:
-            logger.info(
+            logger.debug(
                 "Following todays favorite's (%s) followers" % favorite)
             favorite_followers = getFollowers(favorite, follows)
             favorite_followers_ids = [follower.get('id_str') for follower
@@ -34,7 +34,7 @@ def main():
             new_favorite.user_id = favorite_followers[0].get('id_str')
             new_favorite.favorited = datetime.now() + timedelta(days=6)
         else:
-            logger.info('No favorite for today.')
+            logger.debug('No favorite for today.')
     except Exception, err:
         logger.error('%s: %s' % (Exception, err))
 
