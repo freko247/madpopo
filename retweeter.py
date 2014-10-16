@@ -6,7 +6,7 @@ import time
 import analysis
 import config
 from log import logger
-from tweets import getTweets
+from tweets import getTweets, reTweet
 
 
 def main():
@@ -24,7 +24,7 @@ def main():
         analyzed = sorted(analyzed, key=itemgetter(0), reverse=True)
         # Retweet the most positive tweet
         tweet = analyzed[0][1]
-        tweets.reTweet(tweet)
+        reTweet(tweet)
         logger.info(
             'Retweeting tweet_id: %s, with sentiment %s ' % (
                 analyzed[0][1], analyzed[0][0]))
