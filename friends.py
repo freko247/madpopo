@@ -34,52 +34,50 @@ def update_users(users, friends=False):
     for user in users:
         stored_user = db.session.query(
             User).filter_by(user_id=user['id_str']).first()
-        new_user = stored_user or User(user_id=user['id_str'])
+        updated_user = stored_user or User(user_id=user['id_str'])
         # Add followed_back date if user is friend and it is not set
-        if friends and not new_user.followed_back:
-            new_user.followed_back = datetime.now()
+        if (friends and not updated_user.followed_back):
+            updated_user.followed_back = datetime.now()
         join_date = parser.parse(user['created_at']).replace(tzinfo=None)
-        new_user.join_date = join_date
-        new_user.tweets = user['statuses_count']
-        new_user.friends = user['friends_count']
-        new_user.followers = user['followers_count']
-        new_user.language = get_language(user['lang'])
+        updated_user.join_date = join_date
+        updated_user.tweets = user['statuses_count']
+        updated_user.friends = user['friends_count']
+        updated_user.followers = user['followers_count']
+        updated_user.language = get_language(user['lang'])
         # TODO add following values...
         # activity = Column(Float())          # tweet_frequency
         # followed = Column(DateTime)         # Date when user was followed
         # followed_back = Column(DateTime)    # Date when user followed back
-        db.session.merge(new_user)
+        db.session.merge(updated_user)
         db.session.commit()
     logger.info('Updating %d users' % len(users))
 
 
-def update_friends(friends,
-                   max_limit=100,
-                   max_requests=180,
-                   sleep_time=15):
+def lookup_users(users,
+                 max_limit=100,
+                 max_requests=180,
+                 sleep_time=15):
     stop = max_limit
     requests = 0
-    while stop < len(friends):
-        users = twitter_api.users.lookup(
-            user_id=','.join(friends[stop-max_limit:stop]))
-        logger.info('Updating users %d to %d' % (stop-max_limit, stop))
-        update_users(users, friends=True)
+    user_list = []
+    while stop < len(users):
+        user_list += twitter_api.users.lookup(
+            user_id=','.join(users[stop-max_limit:stop]))
+        logger.debug('Looking up users %d to %d' % (stop-max_limit, stop))
         stop += max_limit
         requests += 1
         if requests >= max_requests:
-            logger.info('Request max limit (%d), sleep for %d minutes' % (
+            logger.debug('Request max limit (%d), sleep for %d minutes' % (
                 max_limit, sleep_time))
             sleep(60*sleep_time)
             requests = 0
     else:
-        users = None
-        if len(friends) < max_limit:
-            users = twitter_api.users.lookup(user_id=','.join(friends))
-            logger.info('Updating users %d to %d' % (0, len(friends)))
+        if len(users) < max_limit:
+            user_list += twitter_api.users.lookup(user_id=','.join(users))
+            logger.debug('Looking up users %d to %d' % (0, len(friends)))
         else:
-            users = twitter_api.users.lookup(
-                user_id=','.join(friends[stop-max_limit:]))
-            logger.info('Updating users %d to %d' % (
+            user_list += twitter_api.users.lookup(
+                user_id=','.join(users[stop-max_limit:]))
+            logger.debug('Looking up users %d to %d' % (
                 stop-max_limit, len(friends)))
-        update_users(users, friends=True)
-        requests += 1
+    return user_list
