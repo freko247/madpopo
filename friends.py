@@ -74,10 +74,10 @@ def lookup_users(users,
     else:
         if len(users) < max_limit:
             user_list += twitter_api.users.lookup(user_id=','.join(users))
-            logger.debug('Looking up users %d to %d' % (0, len(friends)))
+            logger.debug('Looking up users %d to %d' % (0, len(users)))
         else:
             user_list += twitter_api.users.lookup(
                 user_id=','.join(users[stop-max_limit:]))
             logger.debug('Looking up users %d to %d' % (
-                stop-max_limit, len(friends)))
+                stop-max_limit, len(users)))
     return user_list
