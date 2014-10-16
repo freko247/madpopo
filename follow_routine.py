@@ -17,7 +17,6 @@ def main():
         user_list = []
         logger.debug('Starting follow routine.')
         for user in users:
-            logger.debug('Trying to find todays favorite')
             user_list.append(user.user_id)
             if user.favorited:
                 if user.favorited.date() == datetime.today().date():
@@ -30,7 +29,7 @@ def main():
             favorite_followers_ids = [follower.get('id_str') for follower
                                       in favorite_followers[:follows]
                                       if follower not in user_list
-                                      and follower == config.TWEET_USER_ID]
+                                      and follower != config.TWEET_USER_ID]
             followUsers(favorite_followers_ids)
             new_favorite = User()
             new_favorite.user_id = favorite_followers[0].get('id_str')
