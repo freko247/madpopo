@@ -14,14 +14,16 @@ from twitterConnection import twitter_api
 def storeTimeline():
     while 1:
         try:
-            logger.info('Starting to store timeline data (pid %s)' % os.getpid())
+            logger.info(
+                'Starting to store timeline data (pid %s)' % os.getpid())
             twitter_stream = TwitterStream(domain='userstream.twitter.com')
             db.init_db()
             for msg in twitter_stream.stream.user(following=True):
                 if msg.get('text'):
                     tweet = Tweet()
                     tweet.text = msg['text'].encode('utf-8')
-                    tweet.created_at = parser.parse(msg['created_at']).replace(tzinfo=None)
+                    tweet.created_at = parser.parse(
+                        msg['created_at']).replace(tzinfo=None)
                     if msg.get('coordinates'):
                         tweet.lon = msg['coordinates']['coordinates'][0]
                         tweet.lat = msg['coordinates']['coordinates'][1]
@@ -36,18 +38,19 @@ def storeTimeline():
             raise
 
 
-def getTweets(filter, until=None):
-    searches = []
+def getTweets(query, until=None):
+    tweets = []
     today = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
-    for query in filter:
-        searches.append(twitter_api.search.tweets(q=query,
-                                                  lang='en',
-                                                  result_type='popular',
-                                                  count=15,
-                                                  until=until or today
-                                                  )
-                        )
-    return searches
+    for term in query:
+        logger.debug('Getting popular tweets about: %s' % term)
+        results = twitter_api.search.tweets(q=term,
+                                            lang='en',
+                                            result_type='popular',
+                                            count=15,
+                                            until=until or today
+                                            )
+        tweets += results.get('statuses')
+    return tweets
 
 
 def reTweet(id):
