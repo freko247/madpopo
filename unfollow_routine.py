@@ -17,9 +17,9 @@ def main():
             # chech when user was followed longer than 24h ago
             # check if user has followed back
             yesterday = datetime.now()-timedelta(days=1)
-            if not user.unfollowed and \
-                    user.followed < yesterday and not \
-                    user.followed_back:
+            if (not user.unfollowed
+                and user.followed < yesterday
+                and not user.followed_back):
                 unfriend_list.append(user.user_id)
         unfollowUsers(unfriend_list)
     except Exception, err:
