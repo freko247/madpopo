@@ -17,10 +17,12 @@ def main():
         user_list = []
         logger.debug('Starting follow routine.')
         for user in users:
+            logger.debug('Trying to find todays favorite')
             user_list.append(user.user_id)
             if user.favorited:
                 if user.favorited.date() == datetime.today().date():
                     favorite = user.user_id
+                    break
         if favorite:
             logger.debug(
                 "Following todays favorite's (%s) followers" % favorite)
