@@ -28,8 +28,8 @@ def main():
             favorite_followers = getFollowers(favorite, follows)
             favorite_followers_ids = [follower.get('id_str') for follower
                                       in favorite_followers[:follows]
-                                      if follower not in user_list
-                                      and follower != config.TWEET_USER_ID]
+                                      if (follower not in user_list
+                                      and follower != config.TWEET_USER_ID)]
             followUsers(favorite_followers_ids)
             new_favorite = User()
             new_favorite.user_id = favorite_followers[0].get('id_str')
