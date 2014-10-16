@@ -20,7 +20,7 @@ def getFollowers(user_id, follows):
         request_counter = 0
         for i in range(requests):
             cursor = -1
-            logger.debug("Getting followers %d/15" % (1+i))
+            logger.debug("Getting followers %d/%d" % ((1+i), requests))
             if len(found_followers) > 0:
                 cursor = found_followers[-1].get('next_cursor_str')
             found_followers.append(
@@ -32,6 +32,8 @@ def getFollowers(user_id, follows):
             if request_counter == 15:
                 sleep(60*15)
                 request_counter = 0
+            logger.debug("Found %d followers" % (
+                len(found_followers[i].get('users'))))
         followers_list = []
         for segment in found_followers:
             followers_list += segment.get('users')
