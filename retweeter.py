@@ -22,7 +22,7 @@ def main():
         first_sleep = randrange(INITIAL_SLEEP_MAX)
         logger.info('Starting retweet script, but first sleeping %d minutes'
                     % first_sleep)
-        sleep(60*sleep_time)
+        sleep(60*first_sleep)
         # Get tweets
         tweets = getTweets(config.TWEET_LIKES)
         # Analyze tweets
