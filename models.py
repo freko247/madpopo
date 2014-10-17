@@ -56,3 +56,11 @@ class Language(Base):
     __tablename__ = "language"
     id = Column(Integer(), primary_key=True)
     language = Column(String(5))
+
+
+class ReTweet(Base):
+    '''Table of retweets'''
+    __tablename__ = 'retweet'
+    tweet_id = Column(String(20), primary_key=True)
+    retweet_date = Column(DateTime)
+    sentiment = Column(Float)
