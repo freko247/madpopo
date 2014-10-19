@@ -3,6 +3,7 @@ from datetime import datetime
 
 from dateutil import parser
 
+from followers import followUsers
 from log import logger
 from lookup_functions import get_language
 from models import User
@@ -29,14 +30,17 @@ def getFriends(screen_name=config.TWEET_SCREEN_NAME):
     return [str(v) for v in id_list]
 
 
-def update_users(users, friends=False):
+def update_users(users, user_followers=False):
     db.init_db()
     for user in users:
         stored_user = db.session.query(
             User).filter_by(user_id=user['id_str']).first()
         updated_user = stored_user or User(user_id=user['id_str'])
+        # Follow user back if not already followed
+        if user_followers and not updated_user.followed:
+            followUsers([updated_user.user_id])
         # Add followed_back date if user is friend and it is not set
-        if (friends and not updated_user.followed_back):
+        if (user_followers and not updated_user.followed_back):
             updated_user.followed_back = datetime.now()
         join_date = parser.parse(user['created_at']).replace(tzinfo=None)
         updated_user.join_date = join_date

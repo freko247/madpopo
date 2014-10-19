@@ -16,7 +16,7 @@ def main():
         user = twitter_api.users.show(user_id=config.TWEET_USER_ID)
         followers_list = getFollowers(
             config.TWEET_USER_ID, user.get('followers_count'))
-        update_users(followers_list, friends=True)
+        update_users(followers_list, user_followers=True)
         users_list = []
         for user in db.session.query(User).all():
             if not user.followed_back:
