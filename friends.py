@@ -39,6 +39,7 @@ def update_users(users, user_followers=False):
         # Follow user back if not already followed
         if user_followers and not updated_user.followed:
             followUsers([updated_user.user_id])
+            updated_user.followed = datetime.now()
         # Add followed_back date if user is friend and it is not set
         if (user_followers and not updated_user.followed_back):
             updated_user.followed_back = datetime.now()
