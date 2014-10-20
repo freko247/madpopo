@@ -4,6 +4,7 @@ import sys
 import os
 import datetime
 
+import config
 import db
 from log import logger
 from models import Tweet
@@ -38,16 +39,20 @@ def storeTimeline():
             raise
 
 
-def getTweets(query, until=None):
+def getTweets(query, until=None, result_type='popular'):
     tweets = []
     today = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
+    lat, lon = config.TWEET_HOME_GEO
+    radius = config.TWEET_RETWEET_RADIUS
+    geocode = ','.join([str(lat), str(lon), radius])
     for term in query:
         logger.debug('Getting popular tweets about: %s' % term)
         results = twitter_api.search.tweets(q=term,
                                             lang='en',
-                                            result_type='popular',
-                                            count=15,
-                                            until=until or today
+                                            result_type=result_type,
+                                            count=100,
+                                            until=until or today,
+                                            geocode=geocode,
                                             )
         tweets += results.get('statuses')
     return tweets

@@ -24,7 +24,8 @@ def main():
                     % first_sleep)
         sleep(60*first_sleep)
         # Get tweets
-        tweets = getTweets(config.TWEET_LIKES)
+        tweets = getTweets(config.TWEET_LIKES,
+                           result_type='mixed')
         # Analyze tweets
         analyzed = []
         db.init_db()
