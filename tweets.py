@@ -83,14 +83,11 @@ def updateStatus(text, geo=False, location='home'):
     elif location:
         lat = location[0]
         lon = location[1]
-    # status_data = twitter_api.statuses.update(
-    #     status=text,
-    #     lat=lat,
-    #     long=lon,
-    #     possibly_sensitive=True,)
-    status_data = {'id_str': randrange(50000),
-                   'text': text,
-                   'created_at': datetime.datetime.now()}
+    status_data = twitter_api.statuses.update(
+        status=text,
+        lat=lat,
+        long=lon,
+        possibly_sensitive=True,)
     new_status = Status()
     new_status.status_id = status_data.get('id_str')
     new_status.created_at = status_data.get('created_at')
