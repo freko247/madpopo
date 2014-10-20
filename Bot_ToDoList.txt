@@ -7,7 +7,7 @@ List of features to implement for Mads Poulsen
         1. Best probability of being good
         2. Most retweets within last 24 hours
         *  Make a rule where the above two are the same
-- Retweet people from San Francisco
+DONE - Retweet people from San Francisco
 
 #Data
 - Collecting good tweets (tweets with more than 10 retweets)
@@ -28,11 +28,11 @@ List of features to implement for Mads Poulsen
 
 
 #Follow
-- Implement ''simple'' (reciprocal) follow routine
+DONE - Implement ''simple'' (reciprocal) follow routine
 - Implement follow routine on good friends
 - Follow 50% spam accounts, 50% human accounts until 1000 followers
 - Follow people (FOLLOW from Relocate 'Move to San Francisco')
         * Gain followers in San Francisco
 
 #Relocate
-- Move to San Francisco
+DONE - Move to San Francisco
