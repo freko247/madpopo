@@ -64,3 +64,13 @@ class ReTweet(Base):
     tweet_id = Column(String(20), primary_key=True)
     retweet_date = Column(DateTime)
     sentiment = Column(Float)
+
+
+class Status(Base):
+    '''Table, that stores status updates:'''
+    __tablename__ = "status"
+    created_at = Column(DateTime)
+    lat = Column(Float())
+    lon = Column(Float())
+    status_id = Column(String(20), primary_key=True)
+    text = Column(String(length=500))
