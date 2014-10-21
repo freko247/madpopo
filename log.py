@@ -16,7 +16,8 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
 # Add formatting
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+formatter = logging.Formatter(
+    '%(asctime)s %(levelname)s %(pathname)s: %(message)s')
 hdlr.setFormatter(formatter)
 ch.setFormatter(formatter)
 
