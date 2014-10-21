@@ -10,7 +10,7 @@ import db
 
 def main():
     try:
-        follows = 100
+        follows = 30
         db.init_db()
         users = db.session.query(User).all()
         favorite = None
