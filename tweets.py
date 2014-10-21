@@ -66,7 +66,7 @@ def reTweet(id):
 def updateStatus(text, geo=False, location='home'):
     db.init_db()
     statuses = db.session.query(Status).all()
-    logger.info('Number od statuses: %d' % len(statuses))
+    logger.info('Number of statuses: %d' % len(statuses))
     if text in [status.text for status in statuses]:
         logger.info('Duplicate status')
         return
