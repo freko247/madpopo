@@ -90,7 +90,8 @@ def updateStatus(text, geo=False, location='home'):
         possibly_sensitive=True,)
     new_status = Status()
     new_status.status_id = status_data.get('id_str')
-    new_status.created_at = status_data.get('created_at')
+    new_status.created_at = parser.parse(
+        status_data.get('created_at')).replace(tzinfo=None)
     new_status.lat = lat
     new_status.lon = lon
     new_status.text = text
