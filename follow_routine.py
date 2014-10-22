@@ -22,7 +22,13 @@ def main():
                 if user.favorited.date() == datetime.today().date():
                     favorite = user.user_id
                     break
-        if favorite:
+        if not favorite:
+            logger.debug('No favorite for today.')
+            new_favortie = db.session.query(
+                User).filter(User.favorited is None).first()
+            logger.debug('%s is todays new favorite.' % new_favortie.user_id)
+            db.session.merge(new_favortie(favorited=datetime.datetime.now()))
+            db.session.commit()
             logger.debug(
                 "Following todays favorite's (%s) followers" % favorite)
             favorite_followers = getFollowers(favorite, follows)
@@ -34,8 +40,6 @@ def main():
             new_favorite = User()
             new_favorite.user_id = favorite_followers[0].get('id_str')
             new_favorite.favorited = datetime.now() + timedelta(days=6)
-        else:
-            logger.debug('No favorite for today.')
     except Exception, err:
         logger.error('%s: %s' % (Exception, err))
 
