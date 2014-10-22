@@ -24,10 +24,10 @@ def main():
                     break
         if not favorite:
             logger.debug('No favorite for today.')
-            new_favortie = db.session.query(
-                User).filter(User.favorited is None).first()
-            logger.debug('%s is todays new favorite.' % new_favortie.user_id)
-            db.session.merge(new_favortie(favorited=datetime.datetime.now()))
+            new_favorite = db.session.query(
+                User).filter(User.favorited == None).first()
+            logger.debug('%s is todays new favorite.' % new_favorite.user_id)
+            db.session.merge(new_favorite(favorited=datetime.datetime.now()))
             db.session.commit()
             logger.debug(
                 "Following todays favorite's (%s) followers" % favorite)
