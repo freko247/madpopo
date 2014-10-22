@@ -27,7 +27,8 @@ def main():
             new_favorite = db.session.query(
                 User).filter(User.favorited == None).first()
             logger.debug('%s is todays new favorite.' % new_favorite.user_id)
-            db.session.merge(new_favorite(favorited=datetime.datetime.now()))
+            new_favorite.favorited = datetime.now()
+            db.session.merge(new_favorite)
             db.session.commit()
             logger.debug(
                 "Following todays favorite's (%s) followers" % favorite)
