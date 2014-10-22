@@ -85,8 +85,8 @@ def unfollowUsers(users):
     db.init_db()
     for user in users:
         logger.info("Unfollowing: %s" % user)
-        twitter_api.friendships.destroy(user_id=user)
         try:
+            twitter_api.friendships.destroy(user_id=user)
             unfriend = db.session.query(User).filter_by(user_id=user).first()
             unfriend.unfollowed = datetime.now()
             db.session.merge(unfriend)
