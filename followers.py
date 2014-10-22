@@ -69,12 +69,15 @@ def followUsers(users):
     db.init_db()
     for user in users:
         logger.info("Following: %s" % user)
-        twitter_api.friendships.create(user_id=user, follow=False)
-        new_user = User()
-        new_user.followed = datetime.now()
-        new_user.user_id = user
-        db.session.merge(new_user)
-        db.session.commit()
+        try:
+            twitter_api.friendships.create(user_id=user, follow=False)
+            new_user = User()
+            new_user.followed = datetime.now()
+            new_user.user_id = user
+            db.session.merge(new_user)
+            db.session.commit()
+        except Exception, err:
+            logger.info('%s: %s' % (Exception, err))
 
 
 def unfollowUsers(users):
