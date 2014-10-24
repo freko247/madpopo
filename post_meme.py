@@ -24,13 +24,14 @@ def main():
         if not db.session.query(Status).filter(Status.text.like(link)).first():
             filtered_links.append(link)
     meme_link = filtered_links[randrange(len(filtered_links))]
-    soup = BeautifulSoup.BeautifulSoup(urllib2.urlopen(base_url+meme_link))
+    soup = BeautifulSoup.BeautifulSoup(urllib2.urlopen(base_url + meme_link))
     image_element = soup.findAll('img', {'class': 'centered_photo'})
     image_link = None
     for item in str(image_element)[6:-4].split():
         if item.startswith('src'):
             image_link = item[4:].strip('"')
-    updateStatus('The @gordonramsay of today: ' + image_link, geo=True)
+    updateStatus('The @gordonramsay of today: ' + image_link + '\n'
+                 '#GordonOfToday', geo=True)
 
 if __name__ == '__main__':
     main()
