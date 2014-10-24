@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 
 Base = declarative_base()
 
@@ -49,6 +49,54 @@ class User(Base):
     tweets = Column(Integer())          # statuses_count
     unfollowed = Column(DateTime)         # Date when user was followed
     user_id = Column(String(20), primary_key=True)
+
+    # TODO: Below columns are to be added to table
+    #       Field descriptions can be found at:
+    #       https://dev.twitter.com/overview/api/users
+    #       After this file is updated, update 009_Add_all_user_fields
+    # contributors_enabled = Column(Boolean())
+    # created_at = Column(DateTime())
+    # default_profile = Column(Boolean())
+    # default_profile_image = Column(Boolean())
+    # description = Column(String(1000))
+    # entities # Skip this field
+    # favourites_count = 
+    # follow_request_sent = 
+    # following = 
+    # followers_count  # Update existing
+    # friends_count  # Update existing
+    # geo_enabled = 
+    # # id  # use existing
+    # # id_str  # use existing
+    # is_translator = 
+    # lang = 
+    # listed_count = 
+    # location = 
+    # name = 
+    # notifications = 
+    # profile_background_color = 
+    # profile_background_image_url = 
+    # profile_background_image_url_https = 
+    # profile_background_tile = 
+    # profile_banner_url = 
+    # profile_image_url = 
+    # profile_image_url_https = 
+    # profile_link_color = 
+    # profile_sidebar_border_color = 
+    # profile_sidebar_fill_color = 
+    # profile_text_color = 
+    # profile_use_background_image =  
+    # protected = 
+    # screen_name = 
+    # show_all_inline_media = 
+    # status = 
+    # statuses_count  # Update exisisting
+    # time_zone = 
+    # url = 
+    # utc_offset = 
+    # verified = 
+    # withheld_in_countries = 
+    # withheld_scope = 
 
 
 class Language(Base):
