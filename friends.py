@@ -45,9 +45,9 @@ def update_users(users, user_followers=False):
             updated_user.followed_back = datetime.now()
         join_date = parser.parse(user['created_at']).replace(tzinfo=None)
         updated_user.join_date = join_date
-        updated_user.tweets = user['statuses_count']
-        updated_user.friends = user['friends_count']
-        updated_user.followers = user['followers_count']
+        updated_user.statuses_count = user['statuses_count']
+        updated_user.friends_count = user['friends_count']
+        updated_user.followers_count = user['followers_count']
         updated_user.language = get_language(user['lang'])
         # TODO add following values...
         # activity = Column(Float())          # tweet_frequency

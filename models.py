@@ -30,7 +30,7 @@ class User(Base):
     activity = Tweet frequency
     followed = Date when user was followed
     followed_back = Date when user followed back
-    followers = Number of followers_count
+    followers_count = Number of followers_count
     friends = Number of friends_count
     join_date = User join date
     language = User language
@@ -42,61 +42,49 @@ class User(Base):
     favorited = Column(DateTime)        # Date when user was 'the favorite'
     followed = Column(DateTime)         # Date when user was followed
     followed_back = Column(DateTime)    # Date when user followed back
-    followers = Column(Integer())       # number of followers_count
-    friends = Column(Integer())         # number of friends_count
+    followers_count = Column(Integer())       # number of followers_count
+    friends_count = Column(Integer())         # number of friends_count
     join_date = Column(DateTime)        # User join date
     language = Column(Integer())        # lang
     tweets = Column(Integer())          # statuses_count
     unfollowed = Column(DateTime)         # Date when user was followed
     user_id = Column(String(20), primary_key=True)
-
-    # TODO: Below columns are to be added to table
-    #       Field descriptions can be found at:
-    #       https://dev.twitter.com/overview/api/users
-    #       After this file is updated, update 009_Add_all_user_fields
-    # contributors_enabled = Column(Boolean())
-    # created_at = Column(DateTime())
-    # default_profile = Column(Boolean())
-    # default_profile_image = Column(Boolean())
-    # description = Column(String(1000))
-    # entities # Skip this field
-    # favourites_count = 
-    # follow_request_sent = 
-    # following = 
-    # followers_count  # Update existing
-    # friends_count  # Update existing
-    # geo_enabled = 
-    # # id  # use existing
-    # # id_str  # use existing
-    # is_translator = 
-    # lang = 
-    # listed_count = 
-    # location = 
-    # name = 
-    # notifications = 
-    # profile_background_color = 
-    # profile_background_image_url = 
-    # profile_background_image_url_https = 
-    # profile_background_tile = 
-    # profile_banner_url = 
-    # profile_image_url = 
-    # profile_image_url_https = 
-    # profile_link_color = 
-    # profile_sidebar_border_color = 
-    # profile_sidebar_fill_color = 
-    # profile_text_color = 
-    # profile_use_background_image =  
-    # protected = 
-    # screen_name = 
-    # show_all_inline_media = 
-    # status = 
+    contributors_enabled = Column(Boolean())
+    created_at = Column(DateTime())
+    default_profile = Column(Boolean())
+    default_profile_image = Column(Boolean())
+    description = Column(String(1000))
+    favourites_count = Column(Integer())
+    follow_request_sent = Column(Boolean())
+    following = Column(Boolean())
+    geo_enabled = Column(Boolean())
+    is_translator = Column(Boolean())
+    listed_count = Column(Integer())
+    location = Column(String(200))
+    name = Column(String(200))
+    profile_background_color = Column(String(6))
+    profile_background_image_url = Column(String(200))
+    profile_background_image_url_https = Column(String(200))
+    profile_background_tile = Column(Boolean())
+    profile_banner_url = Column(String(200))
+    profile_image_url = Column(String(200))
+    profile_image_url_https = Column(String(200))
+    profile_link_color = Column(String(6))
+    profile_sidebar_border_color = Column(String(6))
+    profile_sidebar_fill_color = Column(String(6))
+    profile_text_color = Column(String(6))
+    profile_use_background_image = Column(Boolean())
+    protected = Column(Boolean())
+    screen_name = Column(String(200))
+    show_all_inline_media = Column(Boolean())
+    # status = Column(String(500))
     # statuses_count  # Update exisisting
-    # time_zone = 
-    # url = 
-    # utc_offset = 
-    # verified = 
-    # withheld_in_countries = 
-    # withheld_scope = 
+    time_zone = Column(String(200))
+    url = Column(String(200))
+    utc_offset = Column(Integer())
+    verified = Column(Boolean())
+    withheld_in_countries = Column(Boolean())
+    withheld_scope = Column(Boolean())
 
 
 class Language(Base):
