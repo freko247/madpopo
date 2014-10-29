@@ -110,3 +110,4 @@ class Status(Base):
     lon = Column(Float())
     status_id = Column(String(20), primary_key=True)
     text = Column(String(length=500))
+    source_id = Column(String(50))
