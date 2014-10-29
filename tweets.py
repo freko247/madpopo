@@ -65,10 +65,12 @@ def reTweet(id):
 
 def updateStatus(params):
     new_text = params.get('status')
-    print new_text
     location = params.get('location')
     if location:
         del params['location']
+    new_source_id = params.get('source_id')
+    if new_source_id:
+        del params['source_id']
     db.init_db()
     statuses = db.session.query(Status).all()
     logger.info('Number of statuses: %d' % len(statuses))
@@ -99,6 +101,8 @@ def updateStatus(params):
     new_status.lat = lat
     new_status.lon = lon
     new_status.text = new_text
+    if new_source_id:
+        new_status.source_id = new_source_id
     db.session.merge(new_status)
     db.session.commit()
     logger.info('Tweeted: %s' % new_text)
