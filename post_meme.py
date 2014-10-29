@@ -30,8 +30,11 @@ def main():
     for item in str(image_element)[6:-4].split():
         if item.startswith('src'):
             image_link = item[4:].strip('"')
-    updateStatus('The @gordonramsay of today: ' + image_link + '\n' +
-                 '#GordonOfToday', geo=True)
+    params = {'status': 'The @gordonramsay of today: ' + image_link + '\n' +
+              '#GordonOfToday',
+              'geo': True,
+              }
+    updateStatus(params)
 
 if __name__ == '__main__':
     main()

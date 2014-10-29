@@ -63,11 +63,16 @@ def reTweet(id):
     twitter_api.statuses.retweet(id=id)
 
 
-def updateStatus(text, geo=False, location='home'):
+def updateStatus(params):
+    new_text = params.get('status')
+    print new_text
+    location = params.get('location')
+    if location:
+        del params['location']
     db.init_db()
     statuses = db.session.query(Status).all()
     logger.info('Number of statuses: %d' % len(statuses))
-    if text in [status.text for status in statuses]:
+    if new_text in [status.text for status in statuses]:
         logger.info('Duplicate status')
         return
     lat = None
@@ -83,21 +88,20 @@ def updateStatus(text, geo=False, location='home'):
     elif location:
         lat = location[0]
         lon = location[1]
-    status_data = twitter_api.statuses.update(
-        status=text,
-        lat=lat,
-        long=lon,
-        possibly_sensitive=True,)
+    params['lat'] = lat
+    params['long'] = lon
+    params['possibly_sensitive'] = True
+    status_data = twitter_api.statuses.update(**params)
     new_status = Status()
     new_status.status_id = status_data.get('id_str')
     new_status.created_at = parser.parse(
         status_data.get('created_at')).replace(tzinfo=None)
     new_status.lat = lat
     new_status.lon = lon
-    new_status.text = text
+    new_status.text = new_text
     db.session.merge(new_status)
     db.session.commit()
-    logger.info('Tweeted: %s' % text)
+    logger.info('Tweeted: %s' % new_text)
 
 
 def main():
