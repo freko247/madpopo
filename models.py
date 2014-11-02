@@ -27,15 +27,6 @@ class Tweet(Base):
 
 class User(Base):
     ''' Stores user information
-    activity = Tweet frequency
-    followed = Date when user was followed
-    followed_back = Date when user followed back
-    followers_count = Number of followers_count
-    friends = Number of friends_count
-    join_date = User join date
-    language = User language
-    tweets = Tweet count
-    user_id = User id
     '''
     __tablename__ = 'user'
     activity = Column(Float())          # tweet_frequency
@@ -46,7 +37,7 @@ class User(Base):
     friends_count = Column(Integer())         # number of friends_count
     join_date = Column(DateTime)        # User join date
     language = Column(Integer())        # lang
-    tweets = Column(Integer())          # statuses_count
+    statuses_count = Column(Integer())          # statuses_count
     unfollowed = Column(DateTime)         # Date when user was followed
     user_id = Column(String(20), primary_key=True)
     contributors_enabled = Column(Boolean())
