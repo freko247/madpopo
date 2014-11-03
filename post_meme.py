@@ -39,6 +39,7 @@ def main():
             'status': 'The @gordonramsay of today: ' + image_link + '\n' +
             '#GordonOfToday',
             'geo': True,
+            'location': 'home',
             }
         updateStatus(params)
     except Exception, err:
