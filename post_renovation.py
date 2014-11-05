@@ -93,9 +93,8 @@ def main():
             media_url = media.get('media_url')
             break
         image = urlopen(media_url)
-        params = {"media[]": image.read(),
+        params = {"media[]": image,
                   "status": generate_text(),
-                  'location': 'work',
                   'source_id': new_source_id
                   }
         # Post tweet

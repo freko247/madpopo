@@ -74,32 +74,41 @@ def updateStatus(params):
     db.init_db()
     statuses = db.session.query(Status).all()
     logger.info('Number of statuses: %d' % len(statuses))
-    if new_text in [status.text for status in statuses]:
+    existing_texts = [status.text for status in statuses]
+    source_ids = [status.source_id for status in statuses if status.source_id]
+    if (new_text in existing_texts or new_source_id in source_ids):
         logger.info('Duplicate status')
         return
     lat = None
     lon = None
-    locations = {
-        'home': config.TWEET_HOME_GEO,
-        'work': config.TWEET_WORK_GEO,
-        }
-    if isinstance(location, basestring):
-        # Somewhat randomize location
-        lat = locations.get(location)[0]+(0.00001 * randrange(150))
-        lon = locations.get(location)[1]+(0.00001 * randrange(150))
-    elif location:
-        lat = location[0]
-        lon = location[1]
-    params['lat'] = lat
-    params['long'] = lon
-    params['possibly_sensitive'] = True
-    status_data = twitter_api.statuses.update(**params)
+    if params.get('media[]'):
+        # Post with media
+        status_data = twitter_api.statuses.update_with_media(**params)
+    else:
+        # Regular tweet settings
+        locations = {
+            'home': config.TWEET_HOME_GEO,
+            'work': config.TWEET_WORK_GEO,
+            }
+        if isinstance(location, basestring):
+            # Somewhat randomize location
+            lat = locations.get(location)[0]+(0.00001 * randrange(150))
+            lon = locations.get(location)[1]+(0.00001 * randrange(150))
+        elif location:
+            lat = location[0]
+            lon = location[1]
+        params['lat'] = lat
+        params['long'] = lon
+        params['possibly_sensitive'] = True
+        status_data = twitter_api.statuses.update(**params)
     new_status = Status()
     new_status.status_id = status_data.get('id_str')
     new_status.created_at = parser.parse(
         status_data.get('created_at')).replace(tzinfo=None)
-    new_status.lat = lat
-    new_status.lon = lon
+    if lat:
+        new_status.lat = lat
+    if lon:
+        new_status.lon = lon
     new_status.text = new_text
     if new_source_id:
         new_status.source_id = new_source_id
