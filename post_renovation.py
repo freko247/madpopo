@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from random import randrange
 from urllib2 import urlopen
+from time import sleep
 
 import db
 from log import logger
@@ -53,9 +54,16 @@ def generate_text():
 
 
 def main():
-    '''Script is used to post an '''
+    '''Script is used to post an image from the renvotion of the bot's
+    fictional restaurant.'''
     try:
-        logger.info('Starting post renovation progress script')
+        sleep_time = randrange(120)
+        logger.info(
+            'Starting post renovation progress script by sleeping %s minutes'
+            % sleep_time
+            )
+        sleep(sleep_time*60)
+        logger.info('Waking up post_renovation script.')
         tweets = twitter_api.statuses.user_timeline(screen_name=USER,
                                                     count=200
                                                     )
