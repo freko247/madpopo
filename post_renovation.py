@@ -101,7 +101,7 @@ def main():
             media_url = media.get('media_url')
             break
         image = urlopen(media_url)
-        params = {"media[]": image,
+        params = {"media[]": image.read(),
                   "status": generate_text(),
                   'source_id': new_source_id
                   }
