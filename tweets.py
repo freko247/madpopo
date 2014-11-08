@@ -81,6 +81,7 @@ def updateStatus(params):
         return
     lat = None
     lon = None
+    status_data = {}
     if params.get('media[]'):
         # Post with media
         status_data = twitter_api.statuses.update_with_media(**params)
