@@ -75,7 +75,7 @@ def updateStatus(params):
     statuses = db.session.query(Status).all()
     logger.info('Number of statuses: %d' % len(statuses))
     existing_texts = [status.text for status in statuses]
-    source_ids = [status.source_id for status in statuses if status.source_id]
+    source_ids = [status.source_id for status in statuses if status.source_id] or []
     if (new_text in existing_texts or new_source_id in source_ids):
         logger.info('Duplicate status')
         return
