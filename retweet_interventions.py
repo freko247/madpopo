@@ -60,34 +60,37 @@ def main():
     logger.info('Starting interventions retweeting (pid %s)' % os.getpid())
     twitter_stream = TwitterStream(domain='stream.twitter.com', app=1)
     db.init_db()
-    for tag_date, tag in TAGS:
-        retweets = 0
-        while tag_date == datetime.datetime.now().date():
-            try:
-                for status in twitter_stream.stream.statuses.filter(track=tag):
-                    tweet_id = status.get('id_str')
-                    retweet_ids = [tweet.tweet_id for
-                                   tweet in db.session.query(ReTweet).all()]
-                    if tweet_id in retweet_ids:
-                        continue
-                    screen_name = status.get('user').get('screen_name')
-                    # Retweet 10 first
-                    if retweets < 10:
-                        reTweet(tweet_id)
-                        logger.info('Retweeted: %s' % tweet_id)
-                        retweets += 1
-                    # Retweet 50 if not BOT
-                    elif (retweets <= 50
-                          and screen_name not in BOTS):
-                        reTweet(tweet_id)
-                        logger.info('Retweeted: %s' % tweet_id)
-                        retweets += 1
-                    # Favorite tweet
-                    favorite(tweet_id)
-                    if (tag_date == datetime.datetime.now().date()):
-                        break
-            except:
-                print 'Stream connection timeout, restarting...'
+    while 1:
+        for tag_date, tag in TAGS:
+            retweets = 0
+            while tag_date == datetime.datetime.now().date():
+                try:
+                    for status in twitter_stream.stream.statuses.filter(
+                            track=tag):
+                        tweet_id = status.get('id_str')
+                        retweet_ids = [tweet.tweet_id for
+                                       tweet in
+                                       db.session.query(ReTweet).all()]
+                        if tweet_id in retweet_ids:
+                            continue
+                        screen_name = status.get('user').get('screen_name')
+                        # Retweet 10 first
+                        if retweets < 10:
+                            reTweet(tweet_id)
+                            logger.info('Retweeted: %s' % tweet_id)
+                            retweets += 1
+                        # Retweet 50 if not BOT
+                        elif (retweets <= 50
+                              and screen_name not in BOTS):
+                            reTweet(tweet_id)
+                            logger.info('Retweeted: %s' % tweet_id)
+                            retweets += 1
+                        # Favorite tweet
+                        favorite(tweet_id)
+                        if (tag_date != datetime.datetime.now().date()):
+                            break
+                except:
+                    print 'Stream connection timeout, restarting...'
 
 
 if __name__ == '__main__':
