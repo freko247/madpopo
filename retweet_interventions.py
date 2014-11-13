@@ -3,6 +3,7 @@
 hashtags'''
 import datetime
 import os
+from time import sleep
 
 from twitterConnection import TwitterStream
 from tweets import reTweet, favorite
@@ -51,7 +52,7 @@ BOTS = ['matsie_at_dtu',
         'ethanwoods88',
         ]
 
-TAGS = [(datetime.date(2014, 11, 13), '#cometlanding'),
+TAGS = [(datetime.date(2014, 11, 13), '#madpopo79'),
         (datetime.date(2014, 11, 14), '#getyourflushot'),
         ]
 
@@ -67,6 +68,7 @@ def main():
                 try:
                     for status in twitter_stream.stream.statuses.filter(
                             track=tag):
+                        sleep(5)
                         tweet_id = status.get('id_str')
                         retweet_ids = [tweet.tweet_id for
                                        tweet in
