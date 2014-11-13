@@ -63,6 +63,10 @@ def reTweet(id):
     twitter_api.statuses.retweet(id=id)
 
 
+def favorite(id):
+    twitter_api.favorites.create(id=id)
+
+
 def updateStatus(params):
     new_text = params.get('status')
     location = params.get('location')
