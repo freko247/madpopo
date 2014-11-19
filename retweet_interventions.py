@@ -79,12 +79,12 @@ def main():
                             continue
                         screen_name = status.get('user').get('screen_name')
                         # Retweet 10 first
-                        if retweets < 10:
+                        if retweets < 5:
                             reTweet(tweet_id)
                             logger.info('Retweeted: %s' % tweet_id)
                             retweets += 1
                         # Retweet 50 if not BOT
-                        elif (retweets <= 50
+                        elif (retweets <= 16
                               and screen_name not in BOTS):
                             reTweet(tweet_id)
                             logger.info('Retweeted: %s' % tweet_id)
