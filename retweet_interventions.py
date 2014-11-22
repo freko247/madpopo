@@ -56,6 +56,7 @@ TAGS = [(datetime.date(2014, 11, 13), '#madpopo79'),
         (datetime.date(2014, 11, 14), '#getyourflushot'),
         (datetime.date(2014, 11, 17), '#highfiveastranger'),
         (datetime.date(2014, 11, 19), '#somethinggood, #unicef'),
+        (datetime.date(2014, 11, 21), '#HowManyPushups'),
         ]
 
 
