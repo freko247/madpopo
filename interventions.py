@@ -73,8 +73,8 @@ INTERVENTION_SCHEDULE = [
     (datetime.date(2014, 11, 28),
      "Black Friday isn't even in Friday anymore... http://www.sfgate.com/business/article/The-three-myths-of-Black-Friday-5920316.php",
      None),
-    (datetime.date(2014, 12, 1), 'this is the tweet', None),
-    (datetime.date(2014, 12, 1), 'this is the tweet', None),
+    (datetime.date(2014, 12, 1), 'Are the rumours true is he here? #BanksySF', None),
+    (datetime.date(2014, 12, 1), "Please someone, where's did you see his artwork? #BanksySF", None),
 ]
 
 
