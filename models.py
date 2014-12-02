@@ -76,6 +76,10 @@ class User(Base):
     verified = Column(Boolean())
     withheld_in_countries = Column(Boolean())
     withheld_scope = Column(Boolean())
+    no_retweets = Column(Integer())
+    no_retweeted = Column(Integer())
+    avg_no_replies = Column(Float())
+    avg_no_mentions = Column(Float())
 
 
 class Language(Base):
