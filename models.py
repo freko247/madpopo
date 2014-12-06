@@ -22,7 +22,7 @@ class Tweet(Base):
     retweet_count = Column(Integer())
     tweet_id = Column(String(20))
     created_at = Column(DateTime)
-    user_id = Column(String(20))
+    user_id = Column(String(20), index=True)
 
 
 class User(Base):
