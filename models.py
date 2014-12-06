@@ -80,6 +80,7 @@ class User(Base):
     no_retweeted = Column(Integer())
     avg_no_replies = Column(Float())
     avg_no_mentions = Column(Float())
+    human = Column(Boolean())
 
 
 class Language(Base):
