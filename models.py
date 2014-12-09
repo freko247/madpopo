@@ -113,5 +113,5 @@ class Status(Base):
 class Friend(Base):
     '''Table, that stores status updates:'''
     __tablename__ = "friend"
-    user_id = Column(String(20), index=True)
-    friend_id = Column(String(20))
+    user_id = Column(String(20), primary_key=True)
+    friend_id = Column(String(20), primary_key=True)
