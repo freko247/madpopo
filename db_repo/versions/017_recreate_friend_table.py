@@ -9,7 +9,7 @@ old_friend = Table('friend', meta,
                    Column('friend_id', String(20)),
                    )
 
-friend = Table('friend', meta,
+friend = Table('friends', meta,
                Column('user_id', String(20), primary_key=True),
                Column('friend_id', String(20), primary_key=True),
                )
@@ -18,8 +18,10 @@ friend = Table('friend', meta,
 def upgrade(migrate_engine):
     meta.bind = migrate_engine
     old_friend.drop()
+    friend.create()
 
 
 def downgrade(migrate_engine):
     meta.bind = migrate_engine
     old_friend.create()
+    friend.drop()
