@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
-import twitter
-import config
+from time import sleep
 
+import twitter
+
+import config
 
 auth = twitter.oauth.OAuth(config.OAUTH_TOKEN, config.OAUTH_TOKEN_SECRET,
                            config.CONSUMER_KEY, config.CONSUMER_SECRET)
@@ -36,3 +38,39 @@ def get_api_connection(app):
         credentials.get('CONSUMER_SECRET')
     )
     return twitter.Twitter(auth=auth)
+
+
+def connection_rotator(method):
+    '''API connection rotator, makes sure that application limits aren't
+    exceeded'''
+    methods = {'friends.ids': ['resources'
+                               'friends',
+                               '/friends/ids',
+                               'remaining'
+                               ],
+               'users.lookup': ['resources',
+                                'users',
+                                '/users/lookup',
+                                'remaining'
+                                ],
+               'search.tweets': ['resources',
+                                 'search',
+                                 '/search/tweets',
+                                 'remaining'
+                                 ],
+               'statuses.user_timeline': ['resources',
+                                          'statuses',
+                                          '/statuses/user_timeline',
+                                          'remaining'
+                                          ],
+               }
+    api_limits = []
+    while 1:
+        for i in range(3):
+            api_limit = get_api_connection(i).application.rate_limit_status()
+            for level in methods.get(method):
+                api_limit = api_limit.get(level)
+            if api_limit > 0:
+                return get_api_connection(i), api_limit
+        print 'All apis sleeping...'
+        sleep(60)
