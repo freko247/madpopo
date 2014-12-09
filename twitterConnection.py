@@ -66,7 +66,7 @@ def connection_rotator(method):
                }
     api_limits = []
     while 1:
-        for i in range(3):
+        for i in range(len(config.OAUTH)):
             api_limit = get_api_connection(i).application.rate_limit_status()
             for level in methods.get(method):
                 api_limit = api_limit.get(level)
