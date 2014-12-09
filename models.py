@@ -108,3 +108,10 @@ class Status(Base):
     status_id = Column(String(20), primary_key=True)
     text = Column(String(length=500))
     source_id = Column(String(50))
+
+
+class Friend(Base):
+    '''Table, that stores status updates:'''
+    __tablename__ = "friend"
+    user_id = Column(String(20), index=True)
+    friend_id = Column(String(20))
