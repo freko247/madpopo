@@ -81,6 +81,7 @@ class User(Base):
     avg_no_replies = Column(Float())
     avg_no_mentions = Column(Float())
     human = Column(Boolean())
+    user_sentiment = Column(Float())
 
 
 class Language(Base):
