@@ -43,7 +43,7 @@ def get_api_connection(app):
 def connection_rotator(method):
     '''API connection rotator, makes sure that application limits aren't
     exceeded'''
-    methods = {'friends.ids': ['resources'
+    methods = {'friends.ids': ['resources',
                                'friends',
                                '/friends/ids',
                                'remaining'
