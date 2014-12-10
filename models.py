@@ -82,6 +82,7 @@ class User(Base):
     avg_no_mentions = Column(Float())
     human = Column(Boolean())
     user_sentiment = Column(Float())
+    friends_follow = Column(Integer())
 
 
 class Language(Base):
